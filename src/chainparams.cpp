@@ -347,41 +347,6 @@ public:
 };
 static CTestNetParams testNetParams;
 
-
-//
-// Regression test
-//
-/*
-class CRegTestParams : public CTestNetParams {
-public:
-    CRegTestParams() {
-        strNetworkID = "regtest";
-        strDataDir = "regtest";
-
-        nFirstPosv2Block = -1;
-        nFirstPosv3Block = -1;
-
-        pchMessageStart[0] = 0xfa;
-        pchMessageStart[1] = 0xbf;
-        pchMessageStart[2] = 0xb5;
-        pchMessageStart[3] = 0xda;
-        bnProofOfWorkLimit = CBigNum(~uint256(0) >> 20);
-        genesis.nTime = GENESIS_BLOCK_TIME;
-        genesis.nBits  = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce = 0;
-        hashGenesisBlock = genesis.GetHash();
-        nDefaultPort = 18444;
-        assert(hashGenesisBlock == uint256("0x0000060d6aaaf8d5f835567060dcfbff843677d10b92ef0e0036cb9b126a9ff0"));
-
-        vSeeds.clear();  // Regtest mode doesn't have any DNS seeds.
-    }
-
-    virtual bool RequireRPCPassword() const { return false; }
-    virtual Network NetworkID() const { return CChainParams::REGTEST; }
-};
-*/
-//static CRegTestParams regTestParams;
-
 static CChainParams *pCurrentParams = &mainParams;
 
 const CChainParams &Params() {
