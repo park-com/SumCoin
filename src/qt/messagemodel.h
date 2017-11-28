@@ -63,7 +63,7 @@ struct MessageTableEntry
     }
 };
 
-/** Interface to Soomcoin Secure Messaging from Qt view code. */
+/** Interface to Sumcoin Secure Messaging from Qt view code. */
 class MessageModel : public QAbstractTableModel
 {
     Q_OBJECT

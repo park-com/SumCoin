@@ -14,7 +14,7 @@ namespace Ui {
     class CoinControlDialog;
 }
 class WalletModel;
-class SoomcoinBridge;
+class SumcoinBridge;
 class CCoinControl;
 
 class CoinControlDialog : public QDialog
@@ -28,7 +28,7 @@ public:
     void setModel(WalletModel *model);
 
     // static because also called from sendcoinsdialog
-    static void updateLabels(WalletModel*, QDialog*, SoomcoinBridge *bridge = 0);
+    static void updateLabels(WalletModel*, QDialog*, SumcoinBridge *bridge = 0);
     static QString getPriorityLabel(double);
 
     static QList<qint64> payAmounts;

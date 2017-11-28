@@ -1,17 +1,17 @@
-Soomcoin V1.0.0.0
+Sumcoin V1.0.0.0
 
-[![Build Status](https://travis-ci.org/getsoomcoin/soomcoin.svg?branch=master)](https://travis-ci.org/getsoomcoin/soomcoin)
+[![Build Status](https://travis-ci.org/getsumcoin/sumcoin.svg?branch=master)](https://travis-ci.org/getsumcoin/sumcoin)
 
 Introduction
 ===========================
 
-The Soomcoin Project is a decentralized peer-to-peer platform, created under an open source license, featuring a built-in cryptocurrency and end-to-end encrypted messaging. The decentralized network aims to provide anonymity and privacy for everyone through a simple user-friendly interface by taking care of all the advanced cryptography in the background.
+The Sumcoin Project is a decentralized peer-to-peer platform, created under an open source license, featuring a built-in cryptocurrency and end-to-end encrypted messaging. The decentralized network aims to provide anonymity and privacy for everyone through a simple user-friendly interface by taking care of all the advanced cryptography in the background.
 
-* [Website](https://getsoomcoin.com/)
+* [Website](https://getsumcoin.com/)
 
 Releases
 ===========================
-[Latest Release - 1.0.0.0](https://getsoomcoin.com)
+[Latest Release - 1.0.0.0](https://getsumcoin.com)
 
 Supported Operating Systems:
 * Linux (64 bit)
@@ -32,7 +32,7 @@ or are controversial.
 
 The master branch is regularly built and tested, but is not guaranteed
 to be completely stable. Tags are regularly created to indicate new
-stable release versions of Soomcoin.
+stable release versions of Sumcoin.
 
 Feature branches are created when there are major new features being
 worked on by several people.

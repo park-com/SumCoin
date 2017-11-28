@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-OTOOL=${HOST}-otool INSTALLNAMETOOL=${HOST}-install_name_tool STRIP=${HOST}-strip contrib/macdeploy/macdeployqtplus Soomcoin.app
+OTOOL=${HOST}-otool INSTALLNAMETOOL=${HOST}-install_name_tool STRIP=${HOST}-strip contrib/macdeploy/macdeployqtplus Sumcoin.app
 mkdir -p dist/.background
 install contrib/macdeploy/background.png dist/.background
 install contrib/macdeploy/DS_Store dist/.DS_Store
-install src/qt/res/icons/soomcoin.icns dist/.VolumeIcon.icns
+install src/qt/res/icons/sumcoin.icns dist/.VolumeIcon.icns
 cd dist
 ln -sf /Applications Applications
 cd ..
-genisoimage -no-cache-inodes -l -probe -V "Soomcoin" -no-pad -r -apple -o soomcoin.tmp.dmg dist
-dmg dmg soomcoin.tmp.dmg soomcoin.macosx.dmg
+genisoimage -no-cache-inodes -l -probe -V "Sumcoin" -no-pad -r -apple -o sumcoin.tmp.dmg dist
+dmg dmg sumcoin.tmp.dmg sumcoin.macosx.dmg

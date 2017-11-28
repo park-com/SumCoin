@@ -1,5 +1,5 @@
 ---
-name: "soomcoin-deps"
+name: "sumcoin-deps"
 suites:
 - "trusty"
 architectures:
@@ -102,4 +102,4 @@ script: |
   done
   #
   cd $STAGING
-  find include lib | sort | tar --no-recursion -cJf $OUTDIR/soomcoin-deps-linux${GBUILD_BITS}-gitian.tar.xz -T -
+  find include lib | sort | tar --no-recursion -cJf $OUTDIR/sumcoin-deps-linux${GBUILD_BITS}-gitian.tar.xz -T -

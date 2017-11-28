@@ -1,9 +1,9 @@
-// Copyright (c) 2014 The Soomcoin developers
+// Copyright (c) 2014 The Sumcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file license.txt or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SOOMCOIN_STEALTH_H
-#define SOOMCOIN_STEALTH_H
+#ifndef SUMCOIN_STEALTH_H
+#define SUMCOIN_STEALTH_H
 
 #include <stdlib.h> 
 #include <stdio.h> 
@@ -90,5 +90,5 @@ int StealthSharedToPublicKey(const ec_point& pkSpend, const ec_secret &sharedS, 
 bool IsStealthAddress(const std::string& encodedAddress);
 
 
-#endif  // SOOMCOIN_STEALTH_H
+#endif  // SUMCOIN_STEALTH_H
 

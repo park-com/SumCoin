@@ -559,7 +559,7 @@ void ParseParameters(int argc, const char* const argv[])
     }
 }
 
-namespace SOOM
+namespace SUM
 {
 void *memrchr(const void *s, int c, size_t n)
 {
@@ -1009,7 +1009,7 @@ static std::string FormatException(std::exception* pex, const char* pszThread)
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "soomcoin";
+    const char* pszModule = "sumcoin";
 #endif
     if (pex)
         return strprintf(
@@ -1039,15 +1039,15 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Soomcoin
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Soomcoin
-    // Mac: ~/Library/Application Support/Soomcoin
-    // Unix: ~/.soomcoin
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Sumcoin
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Sumcoin
+    // Mac: ~/Library/Application Support/Sumcoin
+    // Unix: ~/.sumcoin
     
     
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Soomcoin";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Sumcoin";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -1059,10 +1059,10 @@ boost::filesystem::path GetDefaultDataDir()
         // Mac
         pathRet /= "Library/Application Support";
         fs::create_directory(pathRet);
-        return pathRet / "Soomcoin";
+        return pathRet / "Sumcoin";
     #else
         // Unix
-        return pathRet / ".soomcoin";
+        return pathRet / ".sumcoin";
     #endif
 #endif
 
@@ -1117,7 +1117,7 @@ void ClearDatadirCache()
 
 boost::filesystem::path GetConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-conf", "soomcoin.conf"));
+    boost::filesystem::path pathConfigFile(GetArg("-conf", "sumcoin.conf"));
     if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(false) / pathConfigFile;
     return pathConfigFile;
 }
@@ -1127,14 +1127,14 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile());
     if (!streamConfig.good())
-        return; // No soomcoin.conf file is OK
+        return; // No sumcoin.conf file is OK
 
     set<string> setOptions;
     setOptions.insert("*");
 
     for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it)
     {
-        // Don't overwrite existing settings so command line settings override soomcoin.conf
+        // Don't overwrite existing settings so command line settings override sumcoin.conf
         string strKey = string("-") + it->string_key;
         if (mapSettingsRet.count(strKey) == 0)
         {
@@ -1150,7 +1150,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "soomcoind.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", "sumcoind.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -1338,10 +1338,10 @@ void AddTimeData(const CNetAddr& ip, int64_t nTime)
                 if (!fMatch)
                 {
                     fDone = true;
-                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong Soomcoin will not work properly.");
+                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong Sumcoin will not work properly.");
                     strMiscWarning = strMessage;
                     LogPrintf("*** %s\n", strMessage.c_str());
-                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("Soomcoin"), CClientUIInterface::BTN_OK | CClientUIInterface::ICON_WARNING);
+                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("Sumcoin"), CClientUIInterface::BTN_OK | CClientUIInterface::ICON_WARNING);
                 }
             }
         }

@@ -3,7 +3,7 @@
 # Distributed under the MIT/X11 software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-# Mac OS X makefile for soomcoin
+# Mac OS X makefile for sumcoin
 # Originally by Laszlo Hanyecz (solar@heliacal.net)
 USE_UPNP:=0
 CXX=llvm-g++
@@ -59,7 +59,7 @@ OBJS= \
     obj/extkey.o \
     obj/db.o \
     obj/init.o \
-    obj/soomcoind.o \
+    obj/sumcoind.o \
     obj/keystore.o \
     obj/miner.o \
     obj/main.o \
@@ -101,10 +101,10 @@ OBJS= \
 
 
 
-all: soomcoind
+all: sumcoind
 
-test check: test_soomcoin FORCE
-	./test_soomcoin
+test check: test_sumcoin FORCE
+	./test_sumcoin
 LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
 DEFS += $(addprefix -I,$(CURDIR)/leveldb/include)
 DEFS += $(addprefix -I,$(CURDIR)/leveldb/helpers)
@@ -134,7 +134,7 @@ obj/%.o: %.cpp
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-soomcoind: $(OBJS:obj/%=obj/%)
+sumcoind: $(OBJS:obj/%=obj/%)
 	$(LINK) $(CFLAGS) -o $@ $^ $(xLDFLAGS) $(LIBS)
 
 
@@ -149,15 +149,15 @@ obj-test/%.o: test/%.cpp
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-test_soomcoin: $(TESTOBJS) $(filter-out obj/init.o obj/soomcoind.o,$(OBJS:obj/%=obj/%))
+test_sumcoin: $(TESTOBJS) $(filter-out obj/init.o obj/sumcoind.o,$(OBJS:obj/%=obj/%))
 	$(LINK) $(CFLAGS) -o $@ $(LIBPATHS) $^ $(TESTLIBS) $(xLDFLAGS) $(LIBS)
 
 clean:
-	-rm -f soomcoind
+	-rm -f sumcoind
 	-rm -f obj/*.o
 	-rm -f obj/*.P
 	-rm -f obj/build.h
-	-rm -f test_soomcoin
+	-rm -f test_sumcoin
 	-rm -f obj-test/*.o
 	-rm -f obj-test/*.P
 	-cd leveldb && $(MAKE) clean || true

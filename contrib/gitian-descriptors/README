@@ -122,7 +122,7 @@ The debian box will be rebooted and our setup should be complete
 ssh debian@localhost -p 22222
 
 git clone https://github.com/devrandom/gitian-builder.git
-git clone https://github.com/SOOMDev/soomcoin
+git clone https://github.com/SUMDev/sumcoin
 
 cd gitian-builder
 
@@ -148,39 +148,39 @@ Mirror - http://mindstalk.net/host/boost-mingw-gas-cross-compile-2013-03-03.patc
 $ cd ..;
 $ LXC_EXECUTE=lxc-execute; PATH="$(pwd)/libexec/:$PATH";
 
-$ ./bin/gbuild ../soomcoin/contrib/gitian-descriptors/boost-linux.yml
+$ ./bin/gbuild ../sumcoin/contrib/gitian-descriptors/boost-linux.yml
 $ mv build/out/boost-*.zip inputs/
 
-$ ./bin/gbuild ../soomcoin/contrib/gitian-descriptors/deps-linux.yml
-$ mv build/out/soomcoin-deps-*.zip inputs/
+$ ./bin/gbuild ../sumcoin/contrib/gitian-descriptors/deps-linux.yml
+$ mv build/out/sumcoin-deps-*.zip inputs/
    
-$ ./bin/gbuild --commit soomcoin=HEAD ../soomcoin/contrib/gitian-descriptors/gitian-linux.yml
+$ ./bin/gbuild --commit sumcoin=HEAD ../sumcoin/contrib/gitian-descriptors/gitian-linux.yml
 $ mkdir -p ../compiled/linux
 $ mv build/out/* ../compiled/linux/
 
-$ ./bin/gbuild ../soomcoin/contrib/gitian-descriptors/boost-win.yml
+$ ./bin/gbuild ../sumcoin/contrib/gitian-descriptors/boost-win.yml
 $ mv build/out/boost-*.zip inputs/
 
-$ ./bin/gbuild ../soomcoin/contrib/gitian-descriptors/deps-win.yml
-$ mv build/out/soomcoin-deps-*.zip inputs/
+$ ./bin/gbuild ../sumcoin/contrib/gitian-descriptors/deps-win.yml
+$ mv build/out/sumcoin-deps-*.zip inputs/
 
-$ ./bin/gbuild ../soomcoin/contrib/gitian-descriptors/qt-win.yml
+$ ./bin/gbuild ../sumcoin/contrib/gitian-descriptors/qt-win.yml
 $ mv build/out/qt-win*.zip inputs/
 
-$ ./bin/gbuild --commit soomcoin=HEAD ../soomcoin/contrib/gitian-descriptors/gitian-win.yml
+$ ./bin/gbuild --commit sumcoin=HEAD ../sumcoin/contrib/gitian-descriptors/gitian-win.yml
 $ mkdir -p ../compiled/win
 $ mv build/out/* ../compiled/win/
 
-$ ./bin/gbuild --commit osxcross=master,libdmg-hfsplus=master ../soomcoin/contrib/gitian-descriptors/osxcross.yml
+$ ./bin/gbuild --commit osxcross=master,libdmg-hfsplus=master ../sumcoin/contrib/gitian-descriptors/osxcross.yml
 $ mv build/out/osxcross.tar.xz inputs/
 
-$ ./bin/gbuild ../soomcoin/contrib/gitian-descriptors/deps-osx.yml
-$ mv build/out/soomcoin-deps-osx-gitian inputs/
+$ ./bin/gbuild ../sumcoin/contrib/gitian-descriptors/deps-osx.yml
+$ mv build/out/sumcoin-deps-osx-gitian inputs/
 
-$ ./bin/gbuild ../soomcoin/contrib/gitian-descriptors/qt-osx.yml
+$ ./bin/gbuild ../sumcoin/contrib/gitian-descriptors/qt-osx.yml
 $ mv build/out/qt-osx*.tar.xz inputs/
 
-$ ./bin/gbuild --commit soomcoin=HEAD ../soomcoin/contrib/gitian-descriptors/gitian-osx.yml
+$ ./bin/gbuild --commit sumcoin=HEAD ../sumcoin/contrib/gitian-descriptors/gitian-osx.yml
 $ mkdir -p ../compiled/osx
 $ mv build/out/* ../compiled/osx/
 

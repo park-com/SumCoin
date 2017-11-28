@@ -11,10 +11,10 @@ BitcoinUnits::BitcoinUnits(QObject *parent):
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(SOOM);
-    unitlist.append(mSOOM);
-    unitlist.append(uSOOM);
-    unitlist.append(sSOOM);
+    unitlist.append(SUM);
+    unitlist.append(mSUM);
+    unitlist.append(uSUM);
+    unitlist.append(sSUM);
     return unitlist;
 }
 
@@ -22,10 +22,10 @@ bool BitcoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case SOOM:
-    case mSOOM:
-    case uSOOM:
-    case sSOOM:
+    case SUM:
+    case mSUM:
+    case uSUM:
+    case sSUM:
         return true;
     default:
         return false;
@@ -36,10 +36,10 @@ QString BitcoinUnits::name(int unit)
 {
     switch(unit)
     {
-    case SOOM: return QString("SOOM");
-    case mSOOM: return QString("mSOOM");
-    case uSOOM: return QString::fromUtf8("μSOOM");
-    case sSOOM: return QString::fromUtf8("Soomcoinshi");
+    case SUM: return QString("SUM");
+    case mSUM: return QString("mSUM");
+    case uSUM: return QString::fromUtf8("μSUM");
+    case sSUM: return QString::fromUtf8("Sumcoinshi");
     default: return QString("???");
     }
 }
@@ -48,10 +48,10 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case SOOM:  return QString("Soomcoins");
-    case mSOOM: return QString("Milli-Soomcoins (1 / 1,000)");
-    case uSOOM: return QString("Micro-Soomcoins (1 / 1,000,000)");
-    case sSOOM: return QString("Soomcoinshi (1 / 100,000,000)");
+    case SUM:  return QString("Sumcoins");
+    case mSUM: return QString("Milli-Sumcoins (1 / 1,000)");
+    case uSUM: return QString("Micro-Sumcoins (1 / 1,000,000)");
+    case sSUM: return QString("Sumcoinshi (1 / 100,000,000)");
     default:   return QString("???");
     }
 }
@@ -60,9 +60,9 @@ qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case mSOOM: return 100000;
-    case uSOOM: return 100;
-    case sSOOM: return 1;
+    case mSUM: return 100000;
+    case uSUM: return 100;
+    case sSUM: return 1;
     default:   return 100000000;
     }
 }
@@ -71,10 +71,10 @@ int BitcoinUnits::amountDigits(int unit)
 {
     switch(unit)
     {
-    case SOOM: return 8; // 21,000,000 (# digits, without commas)
-    case mSOOM: return 11; // 21,000,000,000
-    case uSOOM: return 14; // 21,000,000,000,000
-    case sSOOM: return 16; // 2,100,000,000,000,000
+    case SUM: return 8; // 21,000,000 (# digits, without commas)
+    case mSUM: return 11; // 21,000,000,000
+    case uSUM: return 14; // 21,000,000,000,000
+    case sSUM: return 16; // 2,100,000,000,000,000
     default: return 0;
     }
 }
@@ -83,9 +83,9 @@ int BitcoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case SOOM: return 8;
-    case mSOOM: return 5;
-    case uSOOM: return 2;
+    case SUM: return 8;
+    case mSUM: return 5;
+    case uSUM: return 2;
     default: return 0;
     }
 }

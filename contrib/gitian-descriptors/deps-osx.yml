@@ -1,5 +1,5 @@
 ---
-name: "soomcoin-deps"
+name: "sumcoin-deps"
 suites:
 - "trusty"
 architectures:
@@ -109,4 +109,4 @@ script: |
   #done
   #
   cd $INSTALLPREFIX
-  find include lib | sort | tar --no-recursion -cJf $OUTDIR/soomcoin-deps-osx-gitian.tar.xz -T -
+  find include lib | sort | tar --no-recursion -cJf $OUTDIR/sumcoin-deps-osx-gitian.tar.xz -T -

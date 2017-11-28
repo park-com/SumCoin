@@ -1,9 +1,9 @@
-// Copyright (c) 2014 The Soomcoin developers
+// Copyright (c) 2014 The Sumcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file license.txt or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SOOM_CORE_H
-#define SOOM_CORE_H
+#ifndef SUM_CORE_H
+#define SUM_CORE_H
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -429,5 +429,5 @@ public:
     int64_t nTime;
 };
 
-#endif  // SOOM_CORE_H
+#endif  // SUM_CORE_H
 

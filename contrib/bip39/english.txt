@@ -1572,7 +1572,7 @@ session
 settle
 setup
 seven
-soomcoin
+sumcoin
 shaft
 shallow
 share

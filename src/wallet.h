@@ -230,7 +230,7 @@ public:
     void ReacceptWalletTransactions();
     void ResendWalletTransactions(bool fForce = false);
     int64_t GetBalance() const;
-    int64_t GetSoomcoinBalance() const;
+    int64_t GetSumcoinBalance() const;
     
     int64_t GetUnconfirmedBalance() const;
     int64_t GetImmatureBalance() const;
@@ -308,8 +308,8 @@ public:
 
     bool IsMine(const CTxIn& txin) const;
     int64_t GetDebit(const CTxIn& txin) const;
-    int64_t GetSoomcoinDebit(const CTxIn& txin) const;
-    int64_t GetSoomcoinCredit(const CTxOut& txout) const;
+    int64_t GetSumcoinDebit(const CTxIn& txin) const;
+    int64_t GetSumcoinCredit(const CTxOut& txout) const;
     
     bool IsMine(const CTxOut& txout) const
     {
@@ -348,7 +348,7 @@ public:
             if (tx.nVersion == ANON_TXN_VERSION
                 && txin.IsAnonInput())
             {
-                nDebit += GetSoomcoinDebit(txin);
+                nDebit += GetSumcoinDebit(txin);
             } else
             {
                 nDebit += GetDebit(txin);
@@ -368,7 +368,7 @@ public:
             if (tx.nVersion == ANON_TXN_VERSION
                 && txout.IsAnonOutput())
             {
-                nCredit += GetSoomcoinCredit(txout);
+                nCredit += GetSumcoinCredit(txout);
             } else
                 nCredit += GetCredit(txout);
             if (!MoneyRange(nCredit))
@@ -377,20 +377,20 @@ public:
         return nCredit;
     }
     
-    bool GetCredit(const CTransaction& tx, int64_t& nSOOM, int64_t& nSoomcoin) const
+    bool GetCredit(const CTransaction& tx, int64_t& nSUM, int64_t& nSumcoin) const
     {
-        nSOOM = 0;
-        nSoomcoin = 0;
+        nSUM = 0;
+        nSumcoin = 0;
         BOOST_FOREACH(const CTxOut& txout, tx.vout)
         {
             if (tx.nVersion == ANON_TXN_VERSION
                 && txout.IsAnonOutput())
             {
-                nSoomcoin += GetSoomcoinCredit(txout);
+                nSumcoin += GetSumcoinCredit(txout);
             } else
-                nSOOM += GetCredit(txout);
-            if (!MoneyRange(nSOOM)
-                || !MoneyRange(nSoomcoin))
+                nSUM += GetCredit(txout);
+            if (!MoneyRange(nSUM)
+                || !MoneyRange(nSumcoin))
                 throw std::runtime_error("CWallet::GetCredit() : value out of range");
         }
         return true;
@@ -610,16 +610,16 @@ public:
     mutable bool fCreditCached;
     mutable bool fAvailableCreditCached;
     mutable bool fChangeCached;
-    mutable bool fAvailableSoomcoinCreditCached;
+    mutable bool fAvailableSumcoinCreditCached;
     mutable bool fCreditSplitCached;
     mutable int64_t nDebitCached;
     mutable int64_t nCreditCached;
     mutable int64_t nAvailableCreditCached;
     mutable int64_t nChangeCached;
-    mutable int64_t nAvailableSoomcoinCreditCached;
+    mutable int64_t nAvailableSumcoinCreditCached;
     
-    mutable int64_t nCredSOOMCached;
-    mutable int64_t nCredSoomcoinCached;
+    mutable int64_t nCredSUMCached;
+    mutable int64_t nCredSumcoinCached;
     
     CWalletTx()
     {
@@ -656,17 +656,17 @@ public:
         fDebitCached = false;
         fCreditCached = false;
         fAvailableCreditCached = false;
-        fAvailableSoomcoinCreditCached = false;
+        fAvailableSumcoinCreditCached = false;
         
-        nCredSOOMCached = 0;
-        nCredSoomcoinCached = 0;
+        nCredSUMCached = 0;
+        nCredSumcoinCached = 0;
         fCreditSplitCached = false;
         
         fChangeCached = false;
         nDebitCached = 0;
         nCreditCached = 0;
         nAvailableCreditCached = 0;
-        nAvailableSoomcoinCreditCached = 0;
+        nAvailableSumcoinCreditCached = 0;
         nChangeCached = 0;
         nOrderPos = -1;
     }
@@ -756,7 +756,7 @@ public:
     {
         fCreditCached = false;
         fAvailableCreditCached = false;
-        fAvailableSoomcoinCreditCached = false;
+        fAvailableSumcoinCreditCached = false;
         fDebitCached = false;
         fChangeCached = false;
         fCreditSplitCached = false;
@@ -833,26 +833,26 @@ public:
         return nCreditCached;
     }
     
-    bool GetCredit(int64_t& nCredSOOM, int64_t& nCredSoomcoin, bool fUseCache=true) const
+    bool GetCredit(int64_t& nCredSUM, int64_t& nCredSumcoin, bool fUseCache=true) const
     {
         // Must wait until coinbase is safely deep enough in the chain before valuing it
         if ((IsCoinBase() || IsCoinStake()) && GetBlocksToMaturity() > 0)
         {
-            nCredSOOM = nCredSoomcoin = 0;
+            nCredSUM = nCredSumcoin = 0;
             return true;
         }
         
         // GetBalance can assume transactions in mapWallet won't change
         if (!fUseCache || !fCreditSplitCached)
         {
-            nCredSOOMCached = 0;
-            nCredSoomcoinCached = 0;
-            pwallet->GetCredit(*this, nCredSOOMCached, nCredSoomcoinCached);
+            nCredSUMCached = 0;
+            nCredSumcoinCached = 0;
+            pwallet->GetCredit(*this, nCredSUMCached, nCredSumcoinCached);
             fCreditSplitCached = true;
         };
         
-        nCredSOOM = nCredSOOMCached;
-        nCredSoomcoin = nCredSoomcoinCached;
+        nCredSUM = nCredSUMCached;
+        nCredSumcoin = nCredSumcoinCached;
         return true;
     }
 
@@ -882,14 +882,14 @@ public:
         return nCredit;
     };
     
-    int64_t GetAvailableSoomcoinCredit(bool fUseCache=true) const
+    int64_t GetAvailableSumcoinCredit(bool fUseCache=true) const
     {
         // Must wait until coinbase is safely deep enough in the chain before valuing it
         if ((IsCoinBase() || IsCoinStake()) && GetBlocksToMaturity() > 0)
             return 0;
         
-        if (fUseCache && fAvailableSoomcoinCreditCached)
-            return nAvailableSoomcoinCreditCached;
+        if (fUseCache && fAvailableSumcoinCreditCached)
+            return nAvailableSumcoinCreditCached;
         
         int64_t nCredit = 0;
         
@@ -911,12 +911,12 @@ public:
                 };
                 
                 if (!MoneyRange(nCredit))
-                    throw std::runtime_error("CWalletTx::GetAvailableSoomcoinCredit() : value out of range");
+                    throw std::runtime_error("CWalletTx::GetAvailableSumcoinCredit() : value out of range");
             };
         };
         
-        nAvailableSoomcoinCreditCached = nCredit;
-        fAvailableSoomcoinCreditCached = true;
+        nAvailableSumcoinCreditCached = nCredit;
+        fAvailableSumcoinCreditCached = true;
         return nCredit;
     };
 

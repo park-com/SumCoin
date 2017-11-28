@@ -1,6 +1,6 @@
 /* jshint maxerr: 10000 */
 /* jslint unused: true */
-/* jshint soomcoin: true */
+/* jshint sumcoin: true */
 /* jshint -W075 */
 (function(ns){
     // this list must be ordered from largest length of the value array, index 0, to the shortest

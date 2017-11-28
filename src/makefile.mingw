@@ -88,7 +88,7 @@ OBJS= \
     obj/extkey.o \
     obj/db.o \
     obj/init.o \
-    obj/soomcoind.o \
+    obj/sumcoind.o \
     obj/keystore.o \
     obj/miner.o \
     obj/main.o \
@@ -128,10 +128,10 @@ OBJS= \
     obj/state.o \
     obj/bloom.o 
 
-all: soomcoind.exe
+all: sumcoind.exe
 
-test check: test_soomcoin FORCE
-	./test_soomcoin
+test check: test_sumcoin FORCE
+	./test_sumcoin
 
 LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
 DEFS += $(addprefix -I,$(CURDIR)/leveldb/include)
@@ -150,9 +150,9 @@ DEFS += -DHAVE_BUILD_INFO
 obj/%.o: %.cpp $(HEADERS)
 	$(CXX) -c $(CFLAGS) -o $@ $<
 
-soomcoind.exe: $(OBJS:obj/%=obj/%)
+sumcoind.exe: $(OBJS:obj/%=obj/%)
 	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ $(LIBS) -lshlwapi
-	strip soomcoind.exe
+	strip sumcoind.exe
 
 obj/scrypt-x86.o: scrypt-x86.S
 	$(CXX) -c $(xCXXFLAGS) -MMD -o $@ $<
@@ -174,15 +174,15 @@ obj-test/%.o: test/%.cpp
 		-e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	rm -f $(@:%.o=%.d)
 
-test_soomcoin.exe: $(TESTOBJS) $(filter-out obj/init.o obj/soomcoind.o,$(OBJS:obj/%=obj/%))
+test_sumcoin.exe: $(TESTOBJS) $(filter-out obj/init.o obj/sumcoind.o,$(OBJS:obj/%=obj/%))
 	$(LINK) $(xCXXFLAGS) $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ $(TESTLIBS) $(xLDFLAGS) $(LIBS)
 
 clean:
 	-rm -f obj/*.o
-	-rm -f soomcoind.exe
+	-rm -f sumcoind.exe
 	-rm -f obj/build.h
 	cd leveldb && TARGET_OS=NATIVE_WINDOWS $(MAKE) clean && cd ..
-	-rm -f test_soomcoin.exe
+	-rm -f test_sumcoin.exe
 	-rm -f obj-test/*.o
 	-rm -f obj-test/*.P
 

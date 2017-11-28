@@ -5,7 +5,7 @@
 #include "smessage.h"
 #include "init.h" // for pwalletMain
 
-// test_soomcoin --log_level=all  --run_test=smsg_tests
+// test_sumcoin --log_level=all  --run_test=smsg_tests
 
 BOOST_AUTO_TEST_SUITE(smsg_tests)
 
@@ -13,8 +13,8 @@ BOOST_AUTO_TEST_CASE(smsg_test)
 {
     
     const std::string sTestMessage =
-        "Soomcoin is a STATE OF THE ART, Proof of Stake crypto currency, utilizing cutting edge technology, "
-        "such as instant p2p encrypted messaging (SoomcoinChat), and anonymous dual-key stealth addresses (SoomcoinSend). "
+        "Sumcoin is a STATE OF THE ART, Proof of Stake crypto currency, utilizing cutting edge technology, "
+        "such as instant p2p encrypted messaging (SumcoinChat), and anonymous dual-key stealth addresses (SumcoinSend). "
         "Initial distribution was done using Proof of Work and Proof of Stake.";
     
     fSecMsgEnabled = true;

@@ -7,7 +7,7 @@ cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP
 software written by Thomas Bernard.
 
 
-See readme-qt.rst for instructions on building Soomcoin QT, the
+See readme-qt.rst for instructions on building Sumcoin QT, the
 graphical user interface.
 
 WINDOWS BUILD NOTES
@@ -76,9 +76,9 @@ make -f Makefile.mingw
 mkdir miniupnpc
 cp *.h miniupnpc/
 
-Soomcoin
+Sumcoin
 -------
 DOS prompt:
-cd \soomcoin\src
+cd \sumcoin\src
 mingw32-make -f makefile.mingw
-strip soomcoind.exe
+strip sumcoind.exe

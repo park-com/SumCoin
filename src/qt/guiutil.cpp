@@ -78,7 +78,7 @@ QString formatServicesStr(quint64 mask)
 {
     QStringList strList;
     
-    // TODO: add SOOM
+    // TODO: add SUM
     // Just scan the last 8 bits for now.
     for (int i = 0; i < 8; i++)
     {
@@ -157,7 +157,7 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
     // NovaCoin: check prefix
-    if(uri.scheme() != QString("soomcoin"))
+    if(uri.scheme() != QString("sumcoin"))
         return false;
 
     SendCoinsRecipient rv;
@@ -182,7 +182,7 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!BitcoinUnits::parse(BitcoinUnits::SOOM, i->second, &rv.amount))
+                if(!BitcoinUnits::parse(BitcoinUnits::SUM, i->second, &rv.amount))
                 {
                     return false;
                 }
@@ -202,13 +202,13 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 
 bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert soomcoin:// to soomcoin:
+    // Convert sumcoin:// to sumcoin:
     //
     //    Cannot handle this later, because bitcoin:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("soomcoin://"))
+    if(uri.startsWith("sumcoin://"))
     {
-        uri.replace(0, 12, "soomcoin:");
+        uri.replace(0, 12, "sumcoin:");
     }
     QUrl uriInstance(uri);
     return parseBitcoinURI(uriInstance, out);
@@ -375,7 +375,7 @@ bool ToolTipToRichTextFilter::eventFilter(QObject *obj, QEvent *evt)
 #ifdef WIN32
 boost::filesystem::path static StartupShortcutPath()
 {
-    return GetSpecialFolderPath(CSIDL_STARTUP) / "Soomcoin.lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / "Sumcoin.lnk";
 }
 
 bool GetStartOnSystemStartup()
@@ -457,7 +457,7 @@ boost::filesystem::path static GetAutostartDir()
 
 boost::filesystem::path static GetAutostartFilePath()
 {
-    return GetAutostartDir() / "soomcoin.desktop";
+    return GetAutostartDir() / "sumcoin.desktop";
 }
 
 bool GetStartOnSystemStartup()
@@ -499,13 +499,13 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         optionFile << "[Desktop Entry]\n" \
                    << "Version=" << FormatFullVersion() << "\n" \
                    << "Type=Application\n" \
-                   << "Name=Soomcoin\n" \
+                   << "Name=Sumcoin\n" \
                    << "Exec=" << pszExePath << "%u -min\n" \
-                   << "Icon=" <<  QFileInfo(":/icons/soomcoin").absoluteFilePath().toStdString() << "\n" \
+                   << "Icon=" <<  QFileInfo(":/icons/sumcoin").absoluteFilePath().toStdString() << "\n" \
                    << "Terminal=false\n" \
                    << "Hidden=false\n" \
                    << "Categories=Application;Network;\n" \
-                   << "MimeType=x-scheme-handler/soomcoin;\n";
+                   << "MimeType=x-scheme-handler/sumcoin;\n";
         optionFile.close();
     }
     return true;
@@ -523,10 +523,10 @@ bool SetStartOnSystemStartup(bool fAutoStart) { return false; }
 HelpMessageBox::HelpMessageBox(QWidget *parent) :
     QMessageBox(parent)
 {
-    header = tr("Soomcoin") + " " + tr("version") + " " +
+    header = tr("Sumcoin") + " " + tr("version") + " " +
         QString::fromStdString(FormatFullVersion()) + "\n\n" +
         tr("Usage:") + "\n" +
-        "  soomcoin [" + tr("command-line options") + "]                     " + "\n";
+        "  sumcoin [" + tr("command-line options") + "]                     " + "\n";
 
     coreOptions = QString::fromStdString(HelpMessage());
 
@@ -535,7 +535,7 @@ HelpMessageBox::HelpMessageBox(QWidget *parent) :
         "  -min                   " + tr("Start minimized") + "\n" +
         "  -splash                " + tr("Show splash screen on startup (default: 1)") + "\n";
 
-    setWindowTitle(tr("Soomcoin"));
+    setWindowTitle(tr("Sumcoin"));
     setTextFormat(Qt::PlainText);
     // setMinimumWidth is ignored for QMessageBox so put in non-breaking spaces to make it wider.
     setText(header + QString(QChar(0x2003)).repeated(50));

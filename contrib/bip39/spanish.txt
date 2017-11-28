@@ -1934,7 +1934,7 @@ turno
 tutor
 ubicar
 úlcera
-soomcoinl
+sumcoinl
 unidad
 unir
 universo

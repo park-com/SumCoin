@@ -4,7 +4,7 @@
 
 #include "stealth.h"
 
-// test_soomcoin --log_level=all  --run_test=stealth_tests
+// test_sumcoin --log_level=all  --run_test=stealth_tests
 
 BOOST_AUTO_TEST_SUITE(stealth_tests)
 

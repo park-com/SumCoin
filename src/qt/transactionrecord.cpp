@@ -3,7 +3,7 @@
 #include "wallet.h"
 #include "base58.h"
 
-#include "soomcoingui.h"
+#include "sumcoingui.h"
 
 /* Return positive answer if transaction should be shown in list.
  */
@@ -20,22 +20,22 @@ QString TransactionRecord::getTypeLabel(const int &type)
     switch(type)
     {
     case RecvWithAddress:
-        return SoomcoinGUI::tr("Received with");
+        return SumcoinGUI::tr("Received with");
     case RecvFromOther:
-        return SoomcoinGUI::tr("Received from");
+        return SumcoinGUI::tr("Received from");
     case SendToAddress:
     case SendToOther:
-        return SoomcoinGUI::tr("Sent to");
+        return SumcoinGUI::tr("Sent to");
     case SendToSelf:
-        return SoomcoinGUI::tr("Payment to yourself");
+        return SumcoinGUI::tr("Payment to yourself");
     case Generated:
-        return SoomcoinGUI::tr("Mined");
-    case RecvSoomcoin:
-        return SoomcoinGUI::tr("Received soomcoin");
-    case SendSoomcoin:
-        return SoomcoinGUI::tr("Sent soomcoin");
+        return SumcoinGUI::tr("Mined");
+    case RecvSumcoin:
+        return SumcoinGUI::tr("Received sumcoin");
+    case SendSumcoin:
+        return SumcoinGUI::tr("Sent sumcoin");
     case Other:
-        return SoomcoinGUI::tr("Other");
+        return SumcoinGUI::tr("Other");
     default:
         return "";
     }
@@ -49,11 +49,11 @@ QString TransactionRecord::getTypeShort(const int &type)
         return "mined";
     case TransactionRecord::RecvWithAddress:
     case TransactionRecord::RecvFromOther:
-    case TransactionRecord::RecvSoomcoin:
+    case TransactionRecord::RecvSumcoin:
         return "input";
     case TransactionRecord::SendToAddress:
     case TransactionRecord::SendToOther:
-    case TransactionRecord::SendSoomcoin:
+    case TransactionRecord::SendSumcoin:
         return "output";
     default:
         return "inout";
@@ -68,9 +68,9 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
     QList<TransactionRecord> parts;
     int64_t nTime = wtx.GetTxTime();
 
-    int64_t nCredSOOM, nCredSoomcoin;
-    wtx.GetCredit(nCredSOOM, nCredSoomcoin, true);
-    int64_t nCredit = nCredSOOM + nCredSoomcoin;
+    int64_t nCredSUM, nCredSumcoin;
+    wtx.GetCredit(nCredSUM, nCredSumcoin, true);
+    int64_t nCredit = nCredSUM + nCredSumcoin;
     int64_t nDebit = wtx.GetDebit();
     int64_t nNet = nCredit - nDebit;
     uint256 hash = wtx.GetHash(), hashPrev = 0;
@@ -80,10 +80,10 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
 
     if (wtx.nVersion == ANON_TXN_VERSION)
     {
-        if (nNet > 0 && nCredSoomcoin > 0)
+        if (nNet > 0 && nCredSumcoin > 0)
         {
             // -- credit
-            TransactionRecord sub(hash, nTime, TransactionRecord::RecvSoomcoin, "", "", nNet, 0);
+            TransactionRecord sub(hash, nTime, TransactionRecord::RecvSumcoin, "", "", nNet, 0);
 
             for (unsigned int nOut = 0; nOut < wtx.vout.size(); nOut++)
             {
@@ -103,7 +103,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
         if (nNet <= 0)
         {
             // -- debit
-            TransactionRecord sub(hash, nTime, TransactionRecord::SendSoomcoin, "", "", nNet, 0);
+            TransactionRecord sub(hash, nTime, TransactionRecord::SendSumcoin, "", "", nNet, 0);
 
             for (unsigned int nOut = 0; nOut < wtx.vout.size(); nOut++)
             {
@@ -148,7 +148,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
 
                     sub.credit = txout.nValue;
 
-                    sub.type = TransactionRecord::RecvSoomcoin;
+                    sub.type = TransactionRecord::RecvSumcoin;
                     sub.address = CBitcoinAddress(ckidD).ToString();
                     //sub.address = wallet->mapAddressBook[ckidD]
 
@@ -223,7 +223,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 if (!walletdb.ReadOwnedAnonOutput(vchImage, oao))
                 {
                     fAllFromMe = false;
-                    break; // display as send/recv soomcoin
+                    break; // display as send/recv sumcoin
                 };
                 continue;
             };
@@ -241,7 +241,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 && txout.IsAnonOutput())
             {
                 fAllToMe = false;
-                break; // display as send/recv soomcoin
+                break; // display as send/recv sumcoin
             }
             opcodetype firstOpCode;
             CScript::const_iterator pc = txout.scriptPubKey.begin();
@@ -298,7 +298,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                     sub.idx = parts.size(); // sequence number
                     sub.credit = txout.nValue;
 
-                    sub.type = TransactionRecord::SendSoomcoin;
+                    sub.type = TransactionRecord::SendSumcoin;
                     sub.address = CBitcoinAddress(ckidD).ToString();
 
                 } else

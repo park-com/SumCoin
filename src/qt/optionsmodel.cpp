@@ -37,7 +37,7 @@ void OptionsModel::Init()
     QSettings settings;
 
     // These are Qt-only settings:
-    nDisplayUnit = settings.value("nDisplayUnit", BitcoinUnits::SOOM).toInt();
+    nDisplayUnit = settings.value("nDisplayUnit", BitcoinUnits::SUM).toInt();
     bDisplayAddresses = settings.value("bDisplayAddresses", false).toBool();
     fMinimizeToTray = settings.value("fMinimizeToTray", false).toBool();
     fMinimizeOnClose = settings.value("fMinimizeOnClose", false).toBool();
@@ -48,7 +48,7 @@ void OptionsModel::Init()
     notifications = settings.value("notifications", "*").toStringList();
     visibleTransactions = settings.value("visibleTransactions", "*").toStringList();
     fAutoRingSize = settings.value("fAutoRingSize", false).toBool();
-    fAutoRedeemSoomcoin = settings.value("fAutoRedeemSoomcoin", false).toBool();
+    fAutoRedeemSumcoin = settings.value("fAutoRedeemSumcoin", false).toBool();
     nMinRingSize = settings.value("nMinRingSize", MIN_RING_SIZE).toInt();
     nMaxRingSize = settings.value("nMaxRingSize", MAX_RING_SIZE).toInt();
 
@@ -132,8 +132,8 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
             return nRowsPerPage;
         case AutoRingSize:
             return fAutoRingSize;
-        case AutoRedeemSoomcoin:
-            return fAutoRedeemSoomcoin;
+        case AutoRedeemSumcoin:
+            return fAutoRedeemSumcoin;
         case MinRingSize:
             return nMinRingSize;
         case MaxRingSize:
@@ -175,7 +175,7 @@ QString OptionsModel::optionIDName(int row)
     case ThinFullIndex: return "ThinFullIndex";
     case ThinIndexWindow: return "ThinIndexWindow";
     case AutoRingSize: return "AutoRingSize";
-    case AutoRedeemSoomcoin: return "AutoRedeemSoomcoin";
+    case AutoRedeemSumcoin: return "AutoRedeemSumcoin";
     case MinRingSize: return "MinRingSize";
     case MaxRingSize: return "MaxRingSize";
     case MapPortUPnP: return "MapPortUPnP";
@@ -272,7 +272,7 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
         case DisplayAddresses:
             bDisplayAddresses = value.toBool();
             settings.setValue("bDisplayAddresses", bDisplayAddresses);
-            emit displayUnitChanged(settings.value("nDisplayUnit", BitcoinUnits::SOOM).toInt());
+            emit displayUnitChanged(settings.value("nDisplayUnit", BitcoinUnits::SUM).toInt());
             break;
         case DetachDatabases: {
             bool fDetachDB = value.toBool();
@@ -305,9 +305,9 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
             settings.setValue("fAutoRingSize", fAutoRingSize);
             }
             break;
-        case AutoRedeemSoomcoin: {
-            fAutoRedeemSoomcoin = value.toBool();
-            settings.setValue("fAutoRedeemSoomcoin", fAutoRedeemSoomcoin);
+        case AutoRedeemSumcoin: {
+            fAutoRedeemSumcoin = value.toBool();
+            settings.setValue("fAutoRedeemSumcoin", fAutoRedeemSumcoin);
             }
             break;
         case MinRingSize: {
@@ -391,6 +391,6 @@ int OptionsModel::getRowsPerPage() { return nRowsPerPage; }
 QStringList OptionsModel::getNotifications() { return notifications; }
 QStringList OptionsModel::getVisibleTransactions() { return visibleTransactions; }
 bool OptionsModel::getAutoRingSize() { return fAutoRingSize; }
-bool OptionsModel::getAutoRedeemSoomcoin() { return fAutoRedeemSoomcoin; }
+bool OptionsModel::getAutoRedeemSumcoin() { return fAutoRedeemSumcoin; }
 int OptionsModel::getMinRingSize() { return nMinRingSize; }
 int OptionsModel::getMaxRingSize() { return nMaxRingSize; }

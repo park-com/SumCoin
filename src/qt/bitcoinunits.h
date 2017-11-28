@@ -17,10 +17,10 @@ public:
      */
     enum Unit
     {
-        SOOM,
-        mSOOM,
-        uSOOM,
-        sSOOM
+        SUM,
+        mSUM,
+        uSUM,
+        sSUM
     };
 
     //! @name Static API

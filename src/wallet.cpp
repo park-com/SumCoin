@@ -573,7 +573,7 @@ void CWallet::WalletUpdateSpent(const CTransaction &tx, bool fBlock)
                 } else
                 if (!wtx.IsSpent(txin.prevout.n) && IsMine(wtx.vout[txin.prevout.n]))
                 {
-                    LogPrintf("WalletUpdateSpent found spent coin %s SOOM %s\n", FormatMoney(wtx.GetCredit()).c_str(), wtx.GetHash().ToString().c_str());
+                    LogPrintf("WalletUpdateSpent found spent coin %s SUM %s\n", FormatMoney(wtx.GetCredit()).c_str(), wtx.GetHash().ToString().c_str());
                     wtx.MarkSpent(txin.prevout.n);
                     wtx.WriteToDisk();
                     NotifyTransactionChanged(this, txin.prevout.hash, CT_UPDATED);
@@ -961,12 +961,12 @@ int64_t CWallet::GetDebit(const CTxIn &txin) const
     return 0;
 }
 
-int64_t CWallet::GetSoomcoinDebit(const CTxIn& txin) const
+int64_t CWallet::GetSumcoinDebit(const CTxIn& txin) const
 {
     if (!txin.IsAnonInput())
         return 0;
 
-    // - amount of owned soomcoin decreased
+    // - amount of owned sumcoin decreased
     // TODO: store links in memory
 
     {
@@ -995,7 +995,7 @@ int64_t CWallet::GetSoomcoinDebit(const CTxIn& txin) const
     return 0;
 };
 
-int64_t CWallet::GetSoomcoinCredit(const CTxOut& txout) const
+int64_t CWallet::GetSumcoinCredit(const CTxOut& txout) const
 {
     if (!txout.IsAnonOutput())
         return 0;
@@ -1109,7 +1109,7 @@ void CWalletTx::GetAmounts(list<pair<CTxDestination, int64_t> >& listReceived,
     int64_t nDebit = GetDebit();
 
     //if (nVersion == ANON_TXN_VERSION)
-    //    nDebit += GetSoomcoinDebit();
+    //    nDebit += GetSumcoinDebit();
 
     if (nDebit > 0) // debit>0 means we signed/sent this transaction
     {
@@ -1422,7 +1422,7 @@ void CWallet::ReacceptWalletTransactions()
 
                 if (fUpdated)
                 {
-                    LogPrintf("ReacceptWalletTransactions found spent coin %s SOOM %s\n", FormatMoney(wtx.GetCredit()).c_str(), wtx.GetHash().ToString().c_str());
+                    LogPrintf("ReacceptWalletTransactions found spent coin %s SUM %s\n", FormatMoney(wtx.GetCredit()).c_str(), wtx.GetHash().ToString().c_str());
                     wtx.MarkDirty();
                     wtx.WriteToDisk();
                 };
@@ -1550,7 +1550,7 @@ int64_t CWallet::GetBalance() const
     return nTotal;
 }
 
-int64_t CWallet::GetSoomcoinBalance() const
+int64_t CWallet::GetSumcoinBalance() const
 {
     int64_t nTotal = 0;
 
@@ -1560,7 +1560,7 @@ int64_t CWallet::GetSoomcoinBalance() const
         {
             const CWalletTx* pcoin = &(*it).second;
             if (pcoin->IsTrusted() && pcoin->nVersion == ANON_TXN_VERSION)
-                nTotal += pcoin->GetAvailableSoomcoinCredit();
+                nTotal += pcoin->GetAvailableSumcoinCredit();
         };
     }
 
@@ -4623,7 +4623,7 @@ bool CWallet::SendSdcToAnon(CStealthAddress& sxAddress, int64_t nValue, std::str
 
     if (vNodes.empty())
     {
-        sError = _("Error: Soomcoin is not connected!");
+        sError = _("Error: Sumcoin is not connected!");
         return false;
     };
 
@@ -4737,7 +4737,7 @@ bool CWallet::SendAnonToAnon(CStealthAddress& sxAddress, int64_t nValue, int nRi
 
     if (vNodes.empty())
     {
-        sError = _("Error: Soomcoin is not connected!");
+        sError = _("Error: Sumcoin is not connected!");
         return false;
     };
 
@@ -4748,9 +4748,9 @@ bool CWallet::SendAnonToAnon(CStealthAddress& sxAddress, int64_t nValue, int nRi
         return false;
     };
 
-    if (nValue + nTransactionFee > GetSoomcoinBalance())
+    if (nValue + nTransactionFee > GetSumcoinBalance())
     {
-        sError = "Insufficient soomcoin funds";
+        sError = "Insufficient sumcoin funds";
         return false;
     };
 
@@ -4839,7 +4839,7 @@ bool CWallet::SendAnonToSdc(CStealthAddress& sxAddress, int64_t nValue, int nRin
 
     if (vNodes.empty())
     {
-        sError = _("Error: Soomcoin is not connected!");
+        sError = _("Error: Sumcoin is not connected!");
         return false;
     };
 
@@ -4850,9 +4850,9 @@ bool CWallet::SendAnonToSdc(CStealthAddress& sxAddress, int64_t nValue, int nRin
         return false;
     };
 
-    if (nValue + nTransactionFee > GetSoomcoinBalance())
+    if (nValue + nTransactionFee > GetSumcoinBalance())
     {
-        sError = "Insufficient soomcoin funds";
+        sError = "Insufficient sumcoin funds";
         return false;
     };
 
@@ -5168,9 +5168,9 @@ bool CWallet::EstimateAnonFee(int64_t nValue, int nRingSize, std::string& sNarr,
         return false;
     };
 
-    if (nValue + nTransactionFee > GetSoomcoinBalance())
+    if (nValue + nTransactionFee > GetSumcoinBalance())
     {
-        sError = "Insufficient soomcoin funds";
+        sError = "Insufficient sumcoin funds";
         return false;
     };
 
@@ -6676,7 +6676,7 @@ void CWallet::FixSpentCoins(int& nMismatchFound, int64_t& nBalanceInQuestion, bo
         {
             if (IsMine(pcoin->vout[n]) && pcoin->IsSpent(n) && (txindex.vSpent.size() <= n || txindex.vSpent[n].IsNull()))
             {
-                LogPrintf("FixSpentCoins found lost coin %s SOOM %s[%d], %s\n",
+                LogPrintf("FixSpentCoins found lost coin %s SUM %s[%d], %s\n",
                     FormatMoney(pcoin->vout[n].nValue).c_str(), pcoin->GetHash().ToString().c_str(), n, fCheckOnly? "repair not attempted" : "repairing");
                 nMismatchFound++;
                 nBalanceInQuestion += pcoin->vout[n].nValue;
@@ -6688,7 +6688,7 @@ void CWallet::FixSpentCoins(int& nMismatchFound, int64_t& nBalanceInQuestion, bo
             } else
             if (IsMine(pcoin->vout[n]) && !pcoin->IsSpent(n) && (txindex.vSpent.size() > n && !txindex.vSpent[n].IsNull()))
             {
-                LogPrintf("FixSpentCoins found spent coin %s SOOM %s[%d], %s\n",
+                LogPrintf("FixSpentCoins found spent coin %s SUM %s[%d], %s\n",
                     FormatMoney(pcoin->vout[n].nValue).c_str(), pcoin->GetHash().ToString().c_str(), n, fCheckOnly? "repair not attempted" : "repairing");
                 nMismatchFound++;
                 nBalanceInQuestion += pcoin->vout[n].nValue;

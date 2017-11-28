@@ -70,8 +70,8 @@ public:
         RecvWithAddress,
         RecvFromOther,
         SendToSelf,
-        RecvSoomcoin,
-        SendSoomcoin,
+        RecvSumcoin,
+        SendSumcoin,
     };
 
     static QString getTypeLabel(const int &type);
