@@ -1,0 +1,7 @@
+
+Soomcoin Release Notes
+
+
+Version 1.0.0.0
+
+ - Release of Soomcoin
